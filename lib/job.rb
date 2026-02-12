@@ -23,7 +23,7 @@ class Job
 	def to_shell
 		puts @function_name + "()"
 		puts "{"
-		puts "	echo 'Executing job: #{@name}'"
+		puts "	echo 'Executing job: #{@name} on stage: #{@stage}'"
 		@script.each do |cmd|
 			puts "	#{cmd}"
 		end

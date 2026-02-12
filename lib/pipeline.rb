@@ -1,6 +1,7 @@
 require 'yaml'
 
 require_relative 'job'
+require_relative 'stage'
 
 class Pipeline
 	attr_accessor :jobs
@@ -34,6 +35,14 @@ class Pipeline
 		job.stage       = value["stage"]
 		job.script      = value["script"]
 		job.environment = value["environment"]
+
+		if job.stage != nil && !job.stage&.empty?
+			if !@stages.key?(job.stage) then
+				stage = Stage.new(job.stage)
+				@stages[job.stage] = stage
+			end
+			@stages[job.stage].jobs << job
+		end
 	end
 
 	public
@@ -44,6 +53,7 @@ class Pipeline
 		# $  -> Variabili globali
 		@filename = filename
 		@variables = {}
+		@stages = {}
 	end
 
 	def parse
@@ -71,6 +81,14 @@ class Pipeline
 
 		@jobs.each do |job|
 			job.to_shell
+		end
+
+		@stages.each do |key, value|
+			value.jobs.each do |job|
+				puts "#{job.function_name} &"
+			end
+			puts "wait"
+			puts
 		end
 	end
 end
