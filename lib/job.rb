@@ -22,5 +22,6 @@ class Job
 			puts "	#{cmd}"
 		end
 		puts "}"
+		puts
 	end
 end

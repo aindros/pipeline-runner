@@ -8,7 +8,7 @@ def main
 	else
 			pipeline = Pipeline.new()
 	end
-  pipeline.parse()
+	pipeline.parse()
 	pipeline.to_shell()
 end
 
