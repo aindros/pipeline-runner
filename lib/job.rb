@@ -1,8 +1,14 @@
 class Job
-	attr_accessor :name
+	attr_reader   :name
+	attr_reader   :function_name
 	attr_accessor :stage
 	attr_accessor :script
 	attr_accessor :environment
+
+	def name=(name)
+		@name = name
+		@function_name = @name.gsub("-", "_")
+	end
 
 	def toYAML
 		puts "#{@name}:"
@@ -15,7 +21,7 @@ class Job
 	end
 
 	def to_shell
-		puts @name.gsub("-", "_") + "()"
+		puts @function_name + "()"
 		puts "{"
 		puts "	echo 'Executing job: #{@name}'"
 		@script.each do |cmd|
