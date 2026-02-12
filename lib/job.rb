@@ -14,7 +14,7 @@ class Job
 		puts "  environment: #{@environment}"
 	end
 
-	def toShell
+	def to_shell
 		puts @name.gsub("-", "_") + "()"
 		puts "{"
 		puts "	echo 'Executing job: #{@name}'"

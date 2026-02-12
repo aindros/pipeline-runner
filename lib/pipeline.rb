@@ -70,7 +70,7 @@ class Pipeline
 		print_variables
 
 		@jobs.each do |job|
-			job.toShell
+			job.to_shell
 		end
 	end
 end
