@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../Pipeline'
+require_relative '../lib/pipeline'
 
 def main
   pipeline = Pipeline.new()

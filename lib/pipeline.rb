@@ -1,6 +1,6 @@
 require 'yaml'
 
-require_relative 'lib/job'
+require_relative 'job'
 
 class Pipeline
 	attr_accessor :jobs
