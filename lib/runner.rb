@@ -8,4 +8,8 @@ class Runner
 		@name = config["name"]
 		@executor = Executor.new(config)
 	end
+
+	def execute()
+		@executor.execute()
+	end
 end
