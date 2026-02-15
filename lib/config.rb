@@ -21,5 +21,7 @@ class Config
 			puts "No config found. Exit."
 			exit 1
 		end
+
+		data = TomlRB.load_file(@config)
 	end
 end
