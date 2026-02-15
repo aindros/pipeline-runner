@@ -6,3 +6,6 @@ install:
 tag-release:
 	@echo git commit -m "'pipeline-runner ${VERSION}'"
 	@echo git tag -a v${VERSION} -m "'Version ${VERSION}'"
+
+clean:
+	@rm -f Gemfile.lock
