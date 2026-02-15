@@ -9,7 +9,7 @@ def main
 		pipeline = Pipeline.new()
 	end
 	pipeline.parse()
-	pipeline.to_shell()
+	pipeline.run()
 end
 
 main

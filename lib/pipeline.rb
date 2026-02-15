@@ -78,6 +78,10 @@ class Pipeline
 		end
 	end
 
+	def run()
+		to_shell()
+	end
+
 	def to_shell
 		print_variables
 
