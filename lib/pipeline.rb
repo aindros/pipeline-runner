@@ -2,6 +2,7 @@ require 'yaml'
 
 require_relative 'job'
 require_relative 'stage'
+require_relative 'config'
 
 class Pipeline
 	attr_accessor :jobs
@@ -54,6 +55,7 @@ class Pipeline
 		@filename = filename
 		@variables = {}
 		@stages = {}
+		@config = Config.new
 	end
 
 	def parse
