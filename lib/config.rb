@@ -1,7 +1,27 @@
 require 'toml-rb'
 
+require_relative 'runner'
+
 class Config
+	private
+
+	def add_runner(config)
+		runner = Runner.new(config)
+		@runners[runner.name] = runner
+	end
+
+	def init_runners(runners)
+		if runners == nil
+			return
+		end
+
+		runners.each do |runner|; add_runner(runner); end
+	end
+
+	public
+
 	def initialize()
+		@runners = {}
 		@config = "config.toml"
 		context_config = ".pipeline-parser/#{@config}"
 		home_config = "~/.config/pipeline-parser/#{@config}"
@@ -23,5 +43,7 @@ class Config
 		end
 
 		data = TomlRB.load_file(@config)
+
+		init_runners(data["runners"])
 	end
 end
