@@ -6,7 +6,7 @@ def main
 	if ARGV.length > 0 then
 		pipeline = Pipeline.new(ARGV[0])
 	else
-			pipeline = Pipeline.new()
+		pipeline = Pipeline.new()
 	end
 	pipeline.parse()
 	pipeline.to_shell()
