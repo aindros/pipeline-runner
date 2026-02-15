@@ -3,6 +3,8 @@ require 'toml-rb'
 require_relative 'runner'
 
 class Config
+	attr_reader :runners
+
 	private
 
 	def add_runner(config)
