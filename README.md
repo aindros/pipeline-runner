@@ -6,3 +6,15 @@ You have to execute it inside the project folder where the `.gitlab-ci.yml` is s
 $ cd <YOUR PROJECT>
 $ ruby <PIPELINE RUNNER PATH>/pipeline-runner
 ```
+
+## For developers
+
+### Add a new gem
+In `Gemfile`, add your gem in this way:
+```
+gem "<GEM NAME>"
+```
+then, execute:
+```
+bundle install
+```
