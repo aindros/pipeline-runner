@@ -1,12 +1,11 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/argument-parser'
-require_relative '../lib/pipeline'
+require_relative '../lib/pipeline-factory'
 
 def main
 	arg = ArgumentParser.new()
-
-	pipeline = Pipeline.new(arg.filename)
+	pipeline = PipelineFactory::create(arg.filename, arg.type)
 	pipeline.parse()
 	pipeline.run()
 end
