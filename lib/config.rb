@@ -4,6 +4,7 @@ require_relative 'runner'
 
 class Config
 	attr_reader :runners
+	attr_reader :runner
 
 	private
 
@@ -14,10 +15,23 @@ class Config
 
 	def init_runners(runners)
 		if runners == nil
+			puts "No runners configured. Exit."
+			exit 1
+		end
+
+		runners.each do |runner|
+			add_runner(runner)
+		end
+	end
+
+	def init_default_runner(runner)
+		# If no default runner is defined into the pipeline, then choose the first one.
+		if runner == nil
+			@runner = @runners.values[0]
 			return
 		end
 
-		runners.each do |runner|; add_runner(runner); end
+		@runner = @runners[runner]
 	end
 
 	public
@@ -47,5 +61,6 @@ class Config
 		data = TomlRB.load_file(@config)
 
 		init_runners(data["runners"])
+		init_default_runner(data["runner"])
 	end
 end
