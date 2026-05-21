@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
 
+require_relative '../lib/argument-parser'
 require_relative '../lib/pipeline'
 
 def main
-	if ARGV.length > 0 then
-		pipeline = Pipeline.new(ARGV[0])
-	else
-		pipeline = Pipeline.new()
-	end
+	arg = ArgumentParser.new()
+
+	pipeline = Pipeline.new(arg.filename)
 	pipeline.parse()
 	pipeline.run()
 end
