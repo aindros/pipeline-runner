@@ -9,7 +9,7 @@ class Runner
 		@executor = Executor.new(config)
 	end
 
-	def execute()
-		@executor.execute()
+	def execute(pipeline)
+		@executor.execute(pipeline)
 	end
 end

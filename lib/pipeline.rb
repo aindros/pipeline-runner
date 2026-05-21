@@ -79,7 +79,7 @@ class Pipeline
 	end
 
 	def run()
-		to_shell()
+		@config.runner.execute(self)
 	end
 
 	def to_shell

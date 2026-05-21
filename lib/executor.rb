@@ -1,7 +1,10 @@
 class Executor
 	private
 
-	def execute_as_container()
+	def execute_as_container(pipeline)
+	end
+
+	def execute_as_shell(pipeline)
 	end
 
 	public
@@ -10,9 +13,10 @@ class Executor
 		@type = config["executor"]
 	end
 
-	def execute()
+	def execute(pipeline)
 		case @type
-		when "podman"; execute_as_container();
+		when "shell"  ; execute_as_shell(pipeline)     ;
+		when "podman" ; execute_as_container(pipeline) ;
 		end
 	end
 end
