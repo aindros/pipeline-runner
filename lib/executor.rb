@@ -5,6 +5,7 @@ class Executor
 	end
 
 	def execute_as_shell(pipeline)
+		pipeline.to_shell()
 	end
 
 	public

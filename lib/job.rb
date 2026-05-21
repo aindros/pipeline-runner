@@ -20,14 +20,14 @@ class Job
 		puts "  environment: #{@environment}"
 	end
 
-	def to_shell
-		puts @function_name + "()"
-		puts "{"
-		puts "	echo 'Executing job: #{@name} on stage: #{@stage}'"
+	def to_shell(out)
+		out.puts @function_name + "()"
+		out.puts "{"
+		out.puts "	echo 'Executing job: #{@name} on stage: #{@stage}'"
 		@script.each do |cmd|
-			puts "	#{cmd}"
+			out.puts "	#{cmd}"
 		end
-		puts "}"
-		puts
+		out.puts "}"
+		out.puts
 	end
 end

@@ -9,17 +9,17 @@ class Pipeline
 
 	private
 
-	def print_variables
+	def print_variables(out)
 		if @variables.length == 0 then
 			return
 		end
 
 		@variables.each do |key, value|
-			puts "#{key}=\"#{value}\""
+			out.puts "#{key}=\"#{value}\""
 		end
 
 		# Adding an empty line for next shell instructions
-		puts
+		out.puts
 	end
 
 	def put_variables(variables)
@@ -82,19 +82,38 @@ class Pipeline
 		@config.runner.execute(self)
 	end
 
-	def to_shell
-		print_variables
+	def to_shell(filename = nil)
+		out =
+			if filename
+				File.open(filename, File::WRONLY | File::CREAT, 0755)
+			else
+				STDOUT
+			end
+
+		out.puts "#!/bin/sh"
+		out.puts
+
+		print_variables(out)
 
 		@jobs.each do |job|
-			job.to_shell
+			job.to_shell(out)
 		end
 
 		@stages.each do |key, value|
 			value.jobs.each do |job|
-				puts "#{job.function_name} &"
+				out.puts "#{job.function_name} &"
 			end
-			puts "wait"
-			puts
+			out.puts "wait"
+			out.puts
 		end
+
+		if out.is_a?(File)
+			# Close the file and the run it
+			out.close
+
+			system(filename)
+		end
+
+		out.close if out.is_a?(File)
 	end
 end
