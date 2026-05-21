@@ -1,3 +1,6 @@
+require 'tempfile'
+require 'securerandom'
+
 class Executor
 	private
 
@@ -5,7 +8,7 @@ class Executor
 	end
 
 	def execute_as_shell(pipeline)
-		pipeline.to_shell()
+		pipeline.to_shell("/tmp/pipeline-runner-#{SecureRandom.uuid}")
 	end
 
 	public
