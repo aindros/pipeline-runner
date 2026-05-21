@@ -4,9 +4,10 @@ class PipelineType
 
 	private_class_method :new
 
-	def initialize(filename, name)
+	def initialize(filename, name, _class)
 		@filename = filename.freeze
 		@name     = name.freeze
+		@_class   = _class.freeze
 		freeze
 	end
 
@@ -29,7 +30,11 @@ class PipelineType
 		end
 	end
 
-	GITLAB    = new(".gitlab-ci.yml",   "gitlab")
-	AZURE     = new("azure.yaml",       "azure")
+	def init(filename)
+		return Pipeline.new(filename)
+	end
+
+	GITLAB    = new(".gitlab-ci.yml",   "gitlab", "GitLabPipeline")
+	AZURE     = new("azure.yaml",       "azure",  "AzurePipeline" )
 	DEFAULT   = GITLAB
 end
