@@ -4,10 +4,10 @@ class PipelineType
 
 	private_class_method :new
 
-	def initialize(filename, name, _class)
-		@filename = filename.freeze
-		@name     = name.freeze
-		@_class   = _class.freeze
+	def initialize(filename, name, class_name)
+		@filename   = filename.freeze
+		@name       = name.freeze
+		@class_name = class_name.freeze
 		freeze
 	end
 
