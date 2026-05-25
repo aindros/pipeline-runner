@@ -34,7 +34,7 @@ class PipelineType
 		return Pipeline.new(filename)
 	end
 
-	GITLAB    = new(".gitlab-ci.yml",   "gitlab", "GitLabPipeline")
-	AZURE     = new("azure.yaml",       "azure",  "AzurePipeline" )
+	GITLAB    = new(".gitlab-ci.yml",      "gitlab", "GitLabPipeline")
+	AZURE     = new("azure-pipelines.yml", "azure",  "AzurePipeline" )
 	DEFAULT   = GITLAB
 end
