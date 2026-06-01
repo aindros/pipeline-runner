@@ -56,6 +56,7 @@ class Pipeline
 		@variables = {}
 		@stages = {}
 		@config = Config.new
+		@jobs = []
 	end
 
 	def parse
@@ -66,7 +67,6 @@ class Pipeline
 
 		config = YAML.load_file(@filename)
 
-		@jobs = []
 		config.each do |key, value|
 			next if key == "stages" || key.start_with?(".")
 			case key
