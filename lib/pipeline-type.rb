@@ -1,3 +1,5 @@
+Dir[File.join(__dir__, 'pipeline', '*.rb')].each { |file| require file }
+
 class PipelineType
 	attr_reader :filename
 	attr_reader :name
@@ -31,7 +33,7 @@ class PipelineType
 	end
 
 	def init(filename)
-		return Pipeline.new(filename)
+		return Object.const_get(@class_name).new(filename)
 	end
 
 	GITLAB    = new(".gitlab-ci.yml",      "gitlab", "GitLabPipeline")
