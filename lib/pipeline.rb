@@ -95,6 +95,7 @@ class Pipeline
 	end
 
 	def generate_system_functions(out)
+		# run_in_shell function definition
 		out.puts "run_in_shell()"
 		out.puts "{"
 		out.puts "	local commands=\"$1\""
