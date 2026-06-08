@@ -24,7 +24,7 @@ class Job
 		out.puts @function_name + "()"
 		out.puts "{"
 		out.puts "	echo 'Executing job: #{@name} on stage: #{@stage}'"
-		@script.each do |cmd|
+		@script&.each do |cmd|
 			out.puts "	#{cmd}"
 		end
 		out.puts "}"
