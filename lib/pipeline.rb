@@ -46,6 +46,12 @@ class Pipeline
 		end
 	end
 
+	protected
+
+	def parse_section(key, value)
+		raise NotImplementedError, "#{self.class} must implement #parse_section"
+	end
+
 	public
 
 	def initialize(filename = '.gitlab-ci.yml')
