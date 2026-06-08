@@ -32,8 +32,8 @@ class PipelineType
 		end
 	end
 
-	def init(filename)
-		return Object.const_get(@class_name).new(filename)
+	def init(filename, _print)
+		return Object.const_get(@class_name).new(filename, _print)
 	end
 
 	GITLAB    = new(".gitlab-ci.yml",      "gitlab", "GitLabPipeline")

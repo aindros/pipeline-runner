@@ -5,6 +5,7 @@ require_relative 'pipeline-type'
 class ArgumentParser
 	attr_reader :filename
 	attr_reader :type
+	attr_reader :print
 
 	def initialize()
 		parse_arguments
@@ -13,6 +14,7 @@ class ArgumentParser
 	private
 
 	def parse_arguments
+		@print = false
 		options = {}
 
 		parser = OptionParser.new do |opts|
@@ -20,6 +22,10 @@ class ArgumentParser
 
 			opts.on("--type TYPE", "Pipeline type. Can be: gitlab, azure") do |v|
 				@type = v
+			end
+
+			opts.on("-p", "--print", "Prints the generated shell script") do |v|
+				@print = true
 			end
 
 			opts.on("-h", "--help", "Shows this help") do

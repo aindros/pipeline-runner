@@ -5,7 +5,7 @@ require_relative '../lib/pipeline-factory'
 
 def main
 	arg = ArgumentParser.new()
-	pipeline = PipelineFactory::create(arg.filename, arg.type)
+	pipeline = PipelineFactory::create(arg.filename, arg.type, arg.print)
 	pipeline.parse()
 	pipeline.run()
 end

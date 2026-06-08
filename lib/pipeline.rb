@@ -69,7 +69,7 @@ class Pipeline
 
 	public
 
-	def initialize(filename = '.gitlab-ci.yml')
+	def initialize(filename = '.gitlab-ci.yml', _print)
 		# @  -> Variabili di istanza
 		# @@ -> Variabili di classe
 		# $  -> Variabili globali
@@ -78,6 +78,7 @@ class Pipeline
 		@stages = {}
 		@config = Config.new
 		@jobs = []
+		@print = _print
 	end
 
 	def parse
@@ -95,7 +96,7 @@ class Pipeline
 
 	def to_shell(filename = nil)
 		out =
-			if filename
+			if filename && !@print
 				File.open(filename, File::WRONLY | File::CREAT, 0755)
 			else
 				STDOUT
