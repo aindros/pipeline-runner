@@ -1,0 +1,5 @@
+stages:
+  - build
+
+job-with-empty-script:
+  stage: build
