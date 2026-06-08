@@ -1,3 +1,5 @@
+require "optparse"
+
 require_relative 'pipeline-type'
 
 class ArgumentParser
@@ -5,31 +7,52 @@ class ArgumentParser
 	attr_reader :type
 
 	def initialize()
-		@filename = retrieve_filename
-		@type     = retrieve_type(@filename)
+		parse_arguments
 	end
 
 	private
 
-	def retrieve_filename
-		if ARGV.length == 0 then
-			return PipelineType::DEFAULT.filename
+	def parse_arguments
+		options = {}
+
+		parser = OptionParser.new do |opts|
+			opts.banner = "Usage: pipeline-runner [options]"
+
+			opts.on("--type TYPE", "Pipeline type. Can be: gitlab, azure") do |v|
+				@type = v
+			end
+
+			opts.on("-h", "--help", "Shows this help") do
+				puts opts
+				exit
+			end
 		end
 
-		return ARGV[0]
+    begin
+      parser.parse!(ARGV)
+    rescue OptionParser::MissingArgument => e
+      warn e.message
+      puts parser
+
+      exit 1
+    end
+
+		set_filename
+		set_type(options)
 	end
 
-	def retrieve_type(filename)
-		if ARGV.length < 1 then
-			type = PipelineType.by_filename(filename)
+	def set_filename
+		@filename = ARGV.shift
+    if @filename.nil?
+			@filename = PipelineType::DEFAULT.filename
+    end
+	end
+
+	def set_type(options)
+		if @type.nil?
+			@type = PipelineType.by_filename(filename)
 		else
-			type = PipelineType.by_name(ARGV[1])
+			@type = PipelineType.by_name(options[:type])
 		end
-
-		if type == nil then
-			type = PipelineType::DEFAULT
-		end
-
-		return type
 	end
 end
