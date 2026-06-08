@@ -123,7 +123,7 @@ class Pipeline
 
 		@stages.each do |key, value|
 			value.jobs.each do |job|
-				out.puts "run_in_shell \"$#{job.function_name}\" &"
+				out.puts "#{job.function_name} &"
 			end
 			out.puts "wait"
 			out.puts

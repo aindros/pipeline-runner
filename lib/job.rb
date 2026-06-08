@@ -21,14 +21,19 @@ class Job
 	end
 
 	def to_shell(out)
-		out.puts @function_name + "=$(cat << 'EOF'"
-		out.puts "	echo \"Executing job: #{@name} on stage: #{@stage}\""
+		out.puts @function_name + "()"
+		out.puts "{"
+		out.puts "	local commands=$(cat << 'EOF'"
+		out.puts "		echo \"Executing job: #{@name} on stage: #{@stage}\""
 		@script&.each do |cmd|
-			out.puts "	#{cmd}"
+			out.puts "		#{cmd}"
 		end
-		out.puts "	echo \"Executed job: #{@name} on stage: #{@stage}\""
+		out.puts "		echo \"Executed job: #{@name} on stage: #{@stage}\""
 		out.puts "EOF"
 		out.puts ")"
+		out.puts ""
+		out.puts '	run_in_shell "$commands"'
+		out.puts "}"
 		out.puts
 	end
 end
