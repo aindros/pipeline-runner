@@ -94,6 +94,15 @@ class Pipeline
 		@config.runner.execute(self)
 	end
 
+	def generate_system_functions(out)
+		out.puts "run_in_shell()"
+		out.puts "{"
+		out.puts "	local commands=\"$1\""
+		out.puts "	sh -c \"$commands\""
+		out.puts "}"
+		out.puts ""
+	end
+
 	def to_shell(filename = nil)
 		out =
 			if filename && !@print
@@ -106,6 +115,7 @@ class Pipeline
 		out.puts
 
 		print_variables(out)
+		generate_system_functions(out)
 
 		@jobs.each do |job|
 			job.to_shell(out)
@@ -113,7 +123,7 @@ class Pipeline
 
 		@stages.each do |key, value|
 			value.jobs.each do |job|
-				out.puts "#{job.function_name} &"
+				out.puts "run_in_shell \"$#{job.function_name}\" &"
 			end
 			out.puts "wait"
 			out.puts
