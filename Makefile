@@ -1,4 +1,5 @@
-VERSION != cat VERSION
+VERSION  != cat VERSION
+SRC_TEST != find test -name '*.rb'
 
 install:
 	@bundle install
@@ -9,3 +10,8 @@ tag-release:
 
 clean:
 	@rm -f Gemfile.lock
+
+test: __force
+	for i in "${SRC_TEST}"; do ruby $$i; done
+
+__force:
