@@ -52,6 +52,10 @@ class Pipeline
 		raise NotImplementedError, "#{self.class} must implement #parse_section"
 	end
 
+	def parse_variables(config)
+		raise NotImplementedError, "#{self.class} must implement #parse_stages"
+	end
+
 	public
 
 	def initialize(filename = '.gitlab-ci.yml')
