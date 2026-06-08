@@ -27,7 +27,7 @@ class Job
 		@script&.each do |cmd|
 			out.puts "	#{cmd}"
 		end
-		out.puts "  echo 'Executed job: #{@name} on stage: #{@stage}'"
+		out.puts "	echo 'Executed job: #{@name} on stage: #{@stage}'"
 		out.puts "}"
 		out.puts
 	end
