@@ -52,6 +52,17 @@ class Pipeline
 		raise NotImplementedError, "#{self.class} must implement #parse_section"
 	end
 
+	def parse_pipeline(config)
+		# The pipeline can be empty, so config can be too
+		if config == nil then
+			return
+		end
+
+		config.each do |key, value|
+			parse_section(key, value)
+		end
+	end
+
 	def parse_variables(config)
 		raise NotImplementedError, "#{self.class} must implement #parse_stages"
 	end
@@ -75,17 +86,7 @@ class Pipeline
 			return
 		end
 
-		config = YAML.load_file(@filename)
-
-		config.each do |key, value|
-			next if key == "stages" || key.start_with?(".")
-			case key
-			when "variables"
-				put_variables(value)
-			else
-				add_job(key, value)
-			end
-		end
+		parse_pipeline(YAML.load_file(@filename))
 	end
 
 	def run()
