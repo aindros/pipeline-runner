@@ -36,6 +36,8 @@ class Pipeline
 		job.stage       = value["stage"]
 		job.script      = value["script"]
 		job.environment = value["environment"]
+		job.image       = value["image"]
+		job.services    = value["services"]
 
 		if job.stage != nil && !job.stage&.empty?
 			if !@stages.key?(job.stage) then
@@ -94,7 +96,17 @@ class Pipeline
 		@config.runner.execute(self)
 	end
 
+	def generate_system_variables(out)
+		out.puts "CONTAINERS=''"
+		out.puts "NETWORKS=''"
+		out.puts ""
+	end
+
 	def generate_system_functions(out)
+		oci        = "podman"
+		containers = "/tmp/containers.list"
+		networks   = "/tmp/networks.list"
+
 		# run_in_shell function definition
 		out.puts "run_in_shell()"
 		out.puts "{"
@@ -102,6 +114,24 @@ class Pipeline
 		out.puts "	sh -c \"$commands\""
 		out.puts "}"
 		out.puts ""
+
+		out.puts "clean_oci_objects()"
+		out.puts "{"
+		out.puts "	for i in $(cat #{containers}); do"
+		out.puts "		if #{oci} container exists \"$i\"; then"
+		out.puts "			#{oci} rm -f \"$i\""
+		out.puts "		fi"
+		out.puts "	done"
+		out.puts
+		out.puts "	for i in $(cat #{networks}); do"
+		out.puts "		if #{oci} network exists \"$i\"; then"
+		out.puts "			#{oci} network rm -f \"$i\""
+		out.puts "		fi"
+		out.puts "	done"
+		out.puts
+		out.puts "	rm -f #{containers} #{networks}"
+		out.puts "}"
+		out.puts
 	end
 
 	def to_shell(filename = nil)
@@ -114,6 +144,8 @@ class Pipeline
 
 		out.puts "#!/bin/sh"
 		out.puts
+
+		generate_system_variables(out)
 
 		print_variables(out)
 		generate_system_functions(out)
@@ -129,6 +161,9 @@ class Pipeline
 			out.puts "wait"
 			out.puts
 		end
+
+		out.puts "clean_oci_objects &"
+		out.puts "wait"
 
 		if out.is_a?(File)
 			# Close the file and the run it
